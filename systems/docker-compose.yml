@@ -1,0 +1,41 @@
+version: "2"
+
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: ./systems/Dockerfile
+    command: >
+      bash -c "
+        cabal update &&
+        cabal install --only-dependencies &&
+        cabal run non-stack-yesod
+      "
+    environment:
+      APP_PORT: 3000
+      APP_DATABASE: host=postgres port=5432 user=postgres dbname=postgres password=
+    ports:
+      - 3000:3000
+    volumes:
+      - ../src:/app/src
+      - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal
+      - app_data:/app/dist
+      - app_data:/root/.cabal
+      - app_data:/root/.ghc
+
+  postgres:
+    image: postgres:9.5.3
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  flyway:
+    image: hiogawa/flyway:4.0.1
+    volumes:
+      - ./flyway.conf:/flyway-4.0.1/conf/flyway.conf
+      - ./sql:/flyway-4.0.1/sql
+
+volumes:
+  app_data:
+  postgres_data:

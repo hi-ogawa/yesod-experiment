@@ -3,13 +3,12 @@
 {-# LANGUAGE TemplateHaskell       #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE ViewPatterns          #-}
-module App (app) where
+module App (app, Widget, resourcesApp) where
 
-import Control.Monad.Trans.Reader (runReaderT, ReaderT)
+import Control.Monad.Trans.Reader (runReaderT)
 import Database.Persist.Sql.Types.Internal (SqlBackend)
 import Database.Persist.Postgresql (withPostgresqlConn)
 import Yesod
-import Yesod.Core.Json
 
 import Models
 import EnvVarLookup (envVarLookup)

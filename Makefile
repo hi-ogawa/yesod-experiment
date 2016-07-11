@@ -37,3 +37,7 @@ deploy:
 	source systems/env.production && docker-compose -f systems/docker-compose.yml run production_builder
 	docker build -t registry.heroku.com/yesod-free-deploy/web -f systems/Dockerfile.dist systems
 	docker push registry.heroku.com/yesod-free-deploy/web
+
+deploy_migrate: SHELL:=/bin/bash
+deploy_migrate:
+	source systems/env.production && docker-compose -f systems/docker-compose.yml run flyway_production

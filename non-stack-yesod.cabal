@@ -30,7 +30,7 @@ library
 
 executable non-stack-yesod
   main-is:           main.hs
-  ghc-options:       -threaded -Wall -fno-warn-unused-do-bind -fno-warn-type-defaults
+  ghc-options:       -static -threaded -Wall -fno-warn-unused-do-bind -fno-warn-type-defaults
   hs-source-dirs:    .
   default-language:  Haskell2010
   build-depends:     non-stack-yesod

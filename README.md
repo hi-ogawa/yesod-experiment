@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hi-ogawa/yesod-experiment.svg?branch=master)](https://travis-ci.org/hi-ogawa/yesod-experiment)
+
 # Yesod Experiments
 
 ## Features

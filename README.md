@@ -5,6 +5,7 @@
 - Postgresql
 - Development/Deployment with Docker (or cabal sandbox)
 - Database schema migration with Flyway
+- cabal.config from stackage-lts without Stack
 
 ## Notes
 

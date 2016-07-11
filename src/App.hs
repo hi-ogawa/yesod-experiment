@@ -3,7 +3,7 @@
 {-# LANGUAGE TemplateHaskell       #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE ViewPatterns          #-}
-module App (App(..), Widget, resourcesApp) where
+module App (App(..), Route(PeopleR, PersonR), Widget, resourcesApp) where
 
 import Control.Monad.Trans.Reader (runReaderT)
 import Database.Persist.Sql.Types.Internal (SqlBackend)

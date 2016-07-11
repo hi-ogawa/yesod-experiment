@@ -1,0 +1,7 @@
+version: "2"
+
+services:
+  postgres:
+    # make postgres accessible from docker host
+    ports:
+      - 5432:5432

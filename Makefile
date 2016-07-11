@@ -13,6 +13,9 @@ dev-docker-app:
 dev-docker-db:
 	docker-compose -f systems/docker-compose.yml up -d postgres
 
+dev-docker-db-for-host:
+	docker-compose -f systems/docker-compose.yml -f systems/docker-compose.host_dev.yml up -d postgres
+
 dev-docker-migrate:
 	docker-compose -f systems/docker-compose.yml run flyway
 

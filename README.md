@@ -36,7 +36,8 @@ $ make dev-docker-db             # prepare postgresql
 $ make dev-docker-migrate        # run schema migration
 $ cp systems/env.development.example systems/env.development
 $ source systems/env.development # load a couple of parameters (port number, database connection)
-$ make dev-app                   # run server in local cabal sandbox
+$ make dev-docker-db-for-host    # open port for host
+$ make dev-app                   # run server from local cabal sandbox
 ```
 
 Or Development in Docker:
@@ -47,13 +48,20 @@ $ make dev-docker-migrate        # save as above
 $ make dev-docker-app            # run server in docker
 ```
 
-Testing:
+Testing in cabal sandbox:
 
 ```
-# in cabal sandbox
+$ make dev-docker-db
+$ make dev-docker-migrate
+$ make dev-docker-db-for-host # open port for host as above
 $ make dev-test
+```
 
-# or in docker
+Or Testing in Docker (in the same way on Travis CI):
+
+```
+$ make dev-docker-db
+$ make dev-docker-migrate
 $ make dev-docker-test
 ```
 

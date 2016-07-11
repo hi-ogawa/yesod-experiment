@@ -6,6 +6,8 @@
 - Development/Deployment with Docker (or cabal sandbox)
 - Database schema migration with Flyway
 - cabal.config from stackage-lts without Stack
+- Restful JSON api server
+- Testing all routes
 
 ## Notes
 
@@ -45,6 +47,14 @@ $ make dev-docker-migrate        # save as above
 $ make dev-docker-app            # run server in docker
 ```
 
-Testing: TODO
+Testing:
+
+```
+# in cabal sandbox
+$ make dev-test
+
+# or in docker
+$ make dev-docker-test
+```
 
 Deployment: TODO

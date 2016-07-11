@@ -20,7 +20,7 @@ share [mkPersist sqlSettings, mkMigrate "schema"] [persistLowerCase|
 Person
     name String
     age Int Maybe
-    deriving Show
+    deriving Eq Show
 |]
 
 instance ToJSON Person where

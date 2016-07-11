@@ -12,7 +12,7 @@ dev-docker-db:
 	docker-compose -f systems/docker-compose.yml up -d postgres
 
 dev-docker-migrate:
-	docker-compose -f systems/docker-compose.yml run flyway flyway migrate
+	docker-compose -f systems/docker-compose.yml run flyway
 
 test:
 	cabal test --show-details=always

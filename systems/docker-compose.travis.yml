@@ -1,0 +1,7 @@
+version: "2"
+
+services:
+  test:
+    volumes:
+      - ../cache/.cabal:/root/.cabal
+      - ../cache/.ghc:/root/.ghc

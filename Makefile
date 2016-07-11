@@ -28,3 +28,8 @@ dev-test:
 
 dev-docker-test:
 	docker-compose -f systems/docker-compose.yml up test
+
+dev-docker-test-travis:
+	mkdir -p cache/.cabal
+	mkdir -p cache/.ghc
+	docker-compose -f systems/docker-compose.yml -f systems/docker-compose.travis.yml up test

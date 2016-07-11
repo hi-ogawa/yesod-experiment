@@ -10,7 +10,8 @@ cabal-version:       >=1.10
 library
   ghc-options:       -threaded -Wall -fno-warn-unused-do-bind -fno-warn-type-defaults
   hs-source-dirs:    src
-  exposed-modules:   App
+  exposed-modules:   AppMain
+                     App
                      Models
                      EnvVarLookup
   default-language:  Haskell2010
@@ -30,13 +31,10 @@ library
 executable non-stack-yesod
   main-is:           main.hs
   ghc-options:       -threaded -Wall -fno-warn-unused-do-bind -fno-warn-type-defaults
-  hs-source-dirs:    src
+  hs-source-dirs:    .
   default-language:  Haskell2010
   build-depends:     non-stack-yesod
                    , base
-                   , text
-                   , warp
-                   , yesod
 
 test-suite test
   type:              exitcode-stdio-1.0

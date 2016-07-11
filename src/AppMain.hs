@@ -1,4 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
+module AppMain where
+
 import Network.Wai.Handler.Warp (run)
 import Yesod (toWaiApp)
 import qualified Data.Text as T

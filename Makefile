@@ -1,4 +1,6 @@
+dev-app: SHELL:=/bin/bash
 dev-app:
+	source systems/env.development
 	cabal run exe:non-stack-yesod
 
 dev-install:
@@ -14,5 +16,13 @@ dev-docker-db:
 dev-docker-migrate:
 	docker-compose -f systems/docker-compose.yml run flyway
 
-test:
+dev-test: SHELL:=/bin/bash
+dev-test:
+	source systems/env.test
+	docker-compose -f systems/docker-compose.yml run flyway_test
+	cabal configure --enable-tests
 	cabal test --show-details=always
+
+dev-docker-test:
+	docker-compose -f systems/docker-compose.yml run flyway_test
+	docker-compose -f systems/docker-compose.yml up test

@@ -18,6 +18,7 @@ services:
       - 3000:3000
     volumes:
       - ../src:/app/src
+      - ../cabal.config:/app/cabal.config
       - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal
       - app_data:/app/dist
       - app_data:/root/.cabal
@@ -38,6 +39,7 @@ services:
       APP_DATABASE: host=postgres port=5432 user=postgres dbname=postgres_test password=
     volumes:
       - ../src:/app/src
+      - ../cabal.config:/app/cabal.config
       - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal
       - app_data:/app/dist
       - app_data:/root/.cabal

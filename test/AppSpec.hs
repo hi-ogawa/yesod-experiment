@@ -9,8 +9,7 @@ import Data.Aeson
 import qualified Data.ByteString.Lazy as B
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as TE
-import Database.Persist.Sql (runSqlConn)
-import Database.Persist.Sql.Types.Internal (SqlBackend)
+import Database.Persist.Sql (runSqlConn, SqlBackend)
 import Database.Persist.Postgresql (withPostgresqlConn)
 import Network.Wai.Test (SResponse(..))
 import Test.Hspec

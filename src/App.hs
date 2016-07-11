@@ -6,7 +6,7 @@
 module App (App(..), Route(PeopleR, PersonR), Widget, resourcesApp) where
 
 import Control.Monad.Trans.Reader (runReaderT)
-import Database.Persist.Sql.Types.Internal (SqlBackend)
+import Database.Persist.Sql (SqlBackend)
 import Database.Persist.Postgresql (withPostgresqlConn, ConnectionString)
 import Yesod
 

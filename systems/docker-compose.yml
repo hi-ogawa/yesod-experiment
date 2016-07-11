@@ -53,8 +53,6 @@ services:
     image: postgres:9.5.3
     environment:
       POSTGRES_DB: postgres_test
-    ports:
-      - 5432:5432 # make postgres accessible from docker host
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

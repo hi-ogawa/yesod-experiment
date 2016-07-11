@@ -96,6 +96,15 @@ services:
       - app_data:/root/.ghc
       - ./build:/app/build
 
+  flyway_production:
+    image: hiogawa/flyway:4.0.1
+    environment:
+      FLYWAY_URL: $PRODUCTION_FLYWAY_URL
+      FLYWAY_USER: $PRODUCTION_FLYWAY_USER
+      FLYWAY_PASSWORD: $PRODUCTION_FLYWAY_PASSWORD
+    volumes:
+      - ./sql:/flyway/sql
+
 volumes:
   app_data:
   postgres_data:

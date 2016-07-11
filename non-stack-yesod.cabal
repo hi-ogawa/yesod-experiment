@@ -7,20 +7,51 @@ build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
 
+library
+  ghc-options:       -threaded -Wall -fno-warn-unused-do-bind -fno-warn-type-defaults
+  hs-source-dirs:    src
+  exposed-modules:   AppMain
+                     App
+                     Models
+                     EnvVarLookup
+  default-language:  Haskell2010
+  build-depends:     aeson
+                   , base
+                   , bytestring
+                   , monad-logger
+                   , persistent
+                   , persistent-postgresql
+                   , persistent-template
+                   , template-haskell
+                   , text
+                   , transformers
+                   , warp
+                   , yesod
+
 executable non-stack-yesod
-  main-is:             main.hs
-  hs-source-dirs:      src
-  default-language:    Haskell2010
-  build-depends:   aeson >= 0.11.2
-                 , base >= 4.8 && < 4.9
-                 , bytestring >= 0.10.6
-                 , monad-logger >= 0.3.18
-                 , persistent >= 2.0 && < 2.6
-                 , persistent-postgresql >= 2.0 && < 2.6
-                 , persistent-template >= 2.0 && < 2.6
-                 , template-haskell >= 2.10.0.0
-                 , text >= 1.2.1.3
-                 , transformers >= 0.4.2.0
-                 , warp >= 3.2.6
-                 , yesod >= 1.4.3 && < 1.5
-                 , yesod-core >= 1.4.20.2
+  main-is:           main.hs
+  ghc-options:       -threaded -Wall -fno-warn-unused-do-bind -fno-warn-type-defaults
+  hs-source-dirs:    .
+  default-language:  Haskell2010
+  build-depends:     non-stack-yesod
+                   , base
+
+test-suite test
+  type:              exitcode-stdio-1.0
+  main-is:           Spec.hs
+  ghc-options:       -threaded -Wall -fno-warn-unused-do-bind -fno-warn-type-defaults
+  hs-source-dirs:    test
+  default-language:  Haskell2010
+  build-depends:     non-stack-yesod
+                   , aeson
+                   , base
+                   , bytestring
+                   , hspec
+                   , monad-logger
+                   , persistent
+                   , persistent-postgresql
+                   , text
+                   , transformers
+                   , yesod
+                   , yesod-test
+                   , wai-extra

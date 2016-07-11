@@ -3,25 +3,25 @@
 {-# LANGUAGE TemplateHaskell       #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE ViewPatterns          #-}
-module App (app) where
+module App (App(..), Route(PeopleR, PersonR), Widget, resourcesApp) where
 
-import Control.Monad.Trans.Reader (runReaderT, ReaderT)
-import Database.Persist.Sql.Types.Internal (SqlBackend)
-import Database.Persist.Postgresql (withPostgresqlConn)
+import Control.Monad.Trans.Reader (runReaderT)
+import Database.Persist.Sql (SqlBackend)
+import Database.Persist.Postgresql (withPostgresqlConn, ConnectionString)
 import Yesod
-import Yesod.Core.Json
 
 import Models
-import EnvVarLookup (envVarLookup)
 
 ---------------
 -- Yesod app --
 
-data App = App
+data App = App { connection :: ConnectionString }
 instance Yesod App
 instance YesodPersist App where
   type YesodPersistBackend App = SqlBackend
-  runDB action = withPostgresqlConn $(envVarLookup "APP_DATABASE") (runReaderT action)
+  runDB action = do
+    App conn <- getYesod
+    withPostgresqlConn conn (runReaderT action)
 
 
 ---------------
@@ -63,10 +63,3 @@ deletePersonR :: PersonId -> Handler Value
 deletePersonR personId = runDB $ do
   delete personId
   return . toJSON $ object [("status", "ok")]
-
-
----------------------
--- WAI application --
-
-app :: IO Application
-app = toWaiApp App

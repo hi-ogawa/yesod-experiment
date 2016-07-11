@@ -7,4 +7,5 @@ cabal.sandbox.config
 
 # app
 systems/env.development
+systems/env.test
 client_session_key.aes

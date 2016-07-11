@@ -11,6 +11,7 @@
 module Models where
 
 import Data.Aeson
+import Data.Aeson.Types (typeMismatch)
 import Database.Persist
 import Database.Persist.TH (share, mkPersist, sqlSettings, mkMigrate, persistLowerCase)
 import Database.Persist.Postgresql
@@ -19,7 +20,7 @@ share [mkPersist sqlSettings, mkMigrate "schema"] [persistLowerCase|
 Person
     name String
     age Int Maybe
-    deriving Show
+    deriving Eq Show
 |]
 
 instance ToJSON Person where
@@ -27,10 +28,14 @@ instance ToJSON Person where
 
 instance FromJSON Person where
   parseJSON (Object v) = Person <$> v .: "name" <*> v .: "age"
+  parseJSON invalid = typeMismatch "Person" invalid
 
 -- Entity seriailzes id, name, age
 instance ToJSON (Entity Person) where
   toJSON = entityIdToJSON
+
+instance FromJSON (Entity Person) where
+  parseJSON = entityIdFromJSON
 
 -- debug print database schema
 printSchema :: IO ()

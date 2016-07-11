@@ -18,14 +18,13 @@ dev-docker-db-for-host:
 
 dev-docker-migrate:
 	docker-compose -f systems/docker-compose.yml run flyway
+	docker-compose -f systems/docker-compose.yml run flyway_test
 
 dev-test: SHELL:=/bin/bash
 dev-test:
 	source systems/env.test
-	docker-compose -f systems/docker-compose.yml run flyway_test
 	cabal configure --enable-tests
 	cabal test --show-details=always
 
 dev-docker-test:
-	docker-compose -f systems/docker-compose.yml run flyway_test
 	docker-compose -f systems/docker-compose.yml up test

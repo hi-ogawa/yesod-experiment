@@ -1,7 +1,6 @@
 dev-app: SHELL:=/bin/bash
 dev-app:
-	source systems/env.development
-	cabal run exe:non-stack-yesod
+	source systems/env.development && cabal run exe:non-stack-yesod
 
 dev-install:
 	cabal sandbox init
@@ -22,9 +21,8 @@ dev-docker-migrate:
 
 dev-test: SHELL:=/bin/bash
 dev-test:
-	source systems/env.test
 	cabal configure --enable-tests
-	cabal test --show-details=always
+	source systems/env.test && cabal test --show-details=always
 
 dev-docker-test:
 	docker-compose -f systems/docker-compose.yml up test

@@ -26,6 +26,5 @@ install: true
 
 script:
   - make dev-docker-db
-  - sleep 5
   - make dev-docker-migrate
   - make dev-docker-test-travis

@@ -34,6 +34,9 @@ instance FromJSON Person where
 instance ToJSON (Entity Person) where
   toJSON = entityIdToJSON
 
+instance FromJSON (Entity Person) where
+  parseJSON = entityIdFromJSON
+
 -- debug print database schema
 printSchema :: IO ()
 printSchema = mockMigration schema

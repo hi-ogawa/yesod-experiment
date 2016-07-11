@@ -25,6 +25,8 @@ services:
 
   postgres:
     image: postgres:9.5.3
+    environment:
+      POSTGRES_DB: postgres_test
     ports:
       - 5432:5432 # make postgres accessible from docker host
     volumes:
@@ -34,6 +36,15 @@ services:
     image: hiogawa/flyway:4.0.1
     environment:
       FLYWAY_URL: jdbc:postgresql://postgres:5432/postgres
+      FLYWAY_USER: postgres
+      FLYWAY_PASSWORD:
+    volumes:
+      - ./sql:/flyway/sql
+
+  flyway_test:
+    image: hiogawa/flyway:4.0.1
+    environment:
+      FLYWAY_URL: jdbc:postgresql://postgres:5432/postgres_test
       FLYWAY_USER: postgres
       FLYWAY_PASSWORD:
     volumes:

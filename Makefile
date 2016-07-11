@@ -1,5 +1,5 @@
 dev-app:
-	cabal run non-stack-yesod
+	cabal run exe:non-stack-yesod
 
 dev-install:
 	cabal sandbox init

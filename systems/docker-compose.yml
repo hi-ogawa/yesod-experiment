@@ -17,6 +17,7 @@ services:
     ports:
       - 3000:3000
     volumes:
+      - ../main.hs:/app/main.hs
       - ../src:/app/src
       - ../cabal.config:/app/cabal.config
       - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal
@@ -36,9 +37,12 @@ services:
         cabal test --show-details=always
       "
     environment:
+      APP_PORT: 3000
       APP_DATABASE: host=postgres port=5432 user=postgres dbname=postgres_test password=
     volumes:
+      - ../main.hs:/app/main.hs
       - ../src:/app/src
+      - ../test:/app/test
       - ../cabal.config:/app/cabal.config
       - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal
       - app_data:/app/dist

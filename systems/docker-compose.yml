@@ -73,6 +73,29 @@ services:
     volumes:
       - ./sql:/flyway/sql
 
+  production_builder:
+    build:
+      context: ../
+      dockerfile: ./systems/Dockerfile
+    command: >
+      bash -c "
+        cabal update &&
+        cabal install --only-dependencies &&
+        cabal install
+        tar -czf build/non-stack-yesod.tar.gz -C /root/.cabal/bin non-stack-yesod
+      "
+    environment:
+      APP_DATABASE: $APP_PRODUCTION_DATABASE
+    volumes:
+      - ../main.hs:/app/main.hs
+      - ../src:/app/src
+      - ../cabal.config:/app/cabal.config
+      - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal
+      - app_data:/app/dist
+      - app_data:/root/.cabal
+      - app_data:/root/.ghc
+      - ./build:/app/build
+
 volumes:
   app_data:
   postgres_data:

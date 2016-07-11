@@ -31,3 +31,9 @@ dev-docker-test-travis:
 	mkdir -p cache/.cabal
 	mkdir -p cache/.ghc
 	docker-compose -f systems/docker-compose.yml -f systems/docker-compose.travis.yml up test
+
+deploy: SHELL:=/bin/bash
+deploy:
+	source systems/env.production && docker-compose -f systems/docker-compose.yml run production_builder
+	docker build -t registry.heroku.com/yesod-free-deploy/web -f systems/Dockerfile.dist systems
+	docker push registry.heroku.com/yesod-free-deploy/web

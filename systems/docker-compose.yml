@@ -9,13 +9,33 @@ services:
       bash -c "
         cabal update &&
         cabal install --only-dependencies &&
-        cabal run non-stack-yesod
+        cabal run exe:non-stack-yesod
       "
     environment:
       APP_PORT: 3000
       APP_DATABASE: host=postgres port=5432 user=postgres dbname=postgres password=
     ports:
       - 3000:3000
+    volumes:
+      - ../src:/app/src
+      - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal
+      - app_data:/app/dist
+      - app_data:/root/.cabal
+      - app_data:/root/.ghc
+
+  test:
+    build:
+      context: ../
+      dockerfile: ./systems/Dockerfile
+    command: >
+      bash -c "
+        cabal update &&
+        cabal install --only-dependencies --enable-tests &&
+        cabal configure --enable-tests &&
+        cabal test --show-details=always
+      "
+    environment:
+      APP_DATABASE: host=postgres port=5432 user=postgres dbname=postgres_test password=
     volumes:
       - ../src:/app/src
       - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal

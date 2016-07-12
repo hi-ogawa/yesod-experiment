@@ -17,7 +17,7 @@ import Yesod hiding (get, runDB)
 import qualified Yesod as Y (get)
 import Yesod.Test
 
-import App (App(..), Route(PeopleR, PersonR))
+import App (App(..), Route(PeopleR, PersonR, StatusR))
 import Models (Person(..))
 import EnvVarLookup (envVarLookup)
 
@@ -41,6 +41,11 @@ withApp = before_ wipeDB . yesodSpec app
 
 yspec :: YesodSpec App
 yspec = do
+  ydescribe "GET /" $ do
+    yit "." $ do
+      get StatusR
+      statusIs 200
+      jsonResp >>= (`shouldBe'` object [("status", "ok")])
   let p0 = Person "hiogawa" (Just 25)
       p1 = Person "johnsnow" Nothing
   ydescribe "GET /people" $ do

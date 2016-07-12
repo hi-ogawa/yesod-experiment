@@ -3,7 +3,7 @@
 {-# LANGUAGE TemplateHaskell       #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE ViewPatterns          #-}
-module App (App(..), Route(PeopleR, PersonR), Widget, resourcesApp) where
+module App (App(..), Route(PeopleR, PersonR, StatusR), Widget, resourcesApp) where
 
 import Control.Monad.Trans.Reader (runReaderT)
 import Database.Persist.Sql (SqlBackend)
@@ -28,6 +28,7 @@ instance YesodPersist App where
 -- route DSL --
 
 mkYesod "App" [parseRoutes|
+/ StatusR GET
 /people PeopleR GET POST
 /people/#PersonId PersonR GET PUT DELETE
 |]
@@ -35,6 +36,9 @@ mkYesod "App" [parseRoutes|
 
 --------------
 -- handlers --
+
+getStatusR :: Handler Value
+getStatusR = return . toJSON $ object [("status", "ok")]
 
 getPeopleR :: Handler Value
 getPeopleR = runDB $ do

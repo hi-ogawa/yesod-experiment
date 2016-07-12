@@ -8,9 +8,10 @@ import qualified Data.Text.Encoding as TE
 import System.Environment (lookupEnv)
 
 import App (App(..))
+import qualified Cors (enable)
 
 main :: IO ()
 main = do
   Just port <- lookupEnv "PORT"
   Just conn <- lookupEnv "APP_DATABASE"
-  run (read port) =<< toWaiApp App { connection = TE.encodeUtf8 . T.pack $ conn }
+  run (read port) . Cors.enable =<< toWaiApp App { connection = TE.encodeUtf8 . T.pack $ conn }

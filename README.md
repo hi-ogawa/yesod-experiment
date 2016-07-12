@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/hi-ogawa/yesod-experiment.svg?branch=master)](https://travis-ci.org/hi-ogawa/yesod-experiment)
 
-# Yesod Experiments
+# Yesod Experiment
 
 ## Features
 
@@ -10,7 +10,7 @@
 - cabal.config from stackage-lts without Stack
 - Restful JSON api server
 - Testing all api routes on Travis CI
-- Heroku container deployment
+- Heroku container deployment (image size is around 800MB)
 
 ## Notes
 
@@ -29,6 +29,12 @@ Docker version 1.11.1, build 5604cbe
 
 $ docker-compose -v
 docker-compose version 1.7.0, build 0d7bf73
+
+$ heroku version
+heroku-toolbelt/3.43.5 (x86_64-darwin10.8.0) ruby/1.9.3
+heroku-cli/5.2.24-4b7e305 (darwin-amd64) go1.6.2
+=== Installed Plugins
+heroku-container-registry@4.0.0
 ```
 
 Development in cabal sandbox:

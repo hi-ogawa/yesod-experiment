@@ -4,12 +4,13 @@
 
 ## Features
 
-- Postgresql
-- Development/Deployment with Docker (or cabal sandbox)
+- Postgresql integration
+- Development with docker or cabal sandbox
 - Database schema migration with Flyway
 - cabal.config from stackage-lts without Stack
 - Restful JSON api server
-- Testing all routes
+- Testing all api routes on Travis CI
+- Heroku container deployment
 
 ## Notes
 
@@ -67,4 +68,23 @@ $ make dev-docker-migrate
 $ make dev-docker-test
 ```
 
-Deployment: TODO
+Deployment (on Heroku):
+
+```
+-- First Time --
+$ heroku plugins:install heroku-container-registry
+$ heroku login
+$ docker login --email=<heroku account email> --username=<heroku account email> --password=$(heroku auth:token) registry.heroku.com
+$ heroku apps:create yesod-free-deploy
+$ heroku addons:create heroku-postgresql --app yesod-free-deploy
+$ heroku config -s -a yesod-free-deploy # copy the output into systems/env.production
+
+-- Continuous Update --
+$ make deploy
+$ make deploy_migrate # if necessary
+$ heroku open -a yesod-free-deploy
+```
+
+- References for deployment
+  - 2 step production image creation: https://blog.codeship.com/continuous-integration-and-delivery-with-docker/
+  - Heroku container deployment: https://devcenter.heroku.com/articles/container-registry-and-runtime

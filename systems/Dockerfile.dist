@@ -1,0 +1,11 @@
+FROM haskell:7.10.3
+
+RUN apt-get update && apt-get install -y libpq-dev
+
+RUN mkdir -p /root/.cabal/bin
+WORKDIR /root/.cabal/bin
+
+COPY build/non-stack-yesod.tar.gz /root/.cabal/bin/non-stack-yesod.tar.gz
+RUN tar -xzf non-stack-yesod.tar.gz non-stack-yesod
+
+CMD ./non-stack-yesod

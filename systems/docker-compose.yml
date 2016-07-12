@@ -12,7 +12,7 @@ services:
         cabal run exe:non-stack-yesod
       "
     environment:
-      APP_PORT: 3000
+      PORT: 3000
       APP_DATABASE: host=postgres port=5432 user=postgres dbname=postgres password=
     ports:
       - 3000:3000
@@ -37,7 +37,6 @@ services:
         cabal test --show-details=always
       "
     environment:
-      APP_PORT: 3000
       APP_DATABASE: host=postgres port=5432 user=postgres dbname=postgres_test password=
     volumes:
       - ../main.hs:/app/main.hs
@@ -71,6 +70,38 @@ services:
       FLYWAY_URL: jdbc:postgresql://postgres:5432/postgres_test
       FLYWAY_USER: postgres
       FLYWAY_PASSWORD:
+    volumes:
+      - ./sql:/flyway/sql
+
+  production_builder:
+    build:
+      context: ../
+      dockerfile: ./systems/Dockerfile
+    command: >
+      bash -c "
+        cabal update &&
+        cabal install --only-dependencies &&
+        cabal install
+        tar -czf build/non-stack-yesod.tar.gz -C /root/.cabal/bin non-stack-yesod
+      "
+    environment:
+      APP_DATABASE: $APP_PRODUCTION_DATABASE
+    volumes:
+      - ../main.hs:/app/main.hs
+      - ../src:/app/src
+      - ../cabal.config:/app/cabal.config
+      - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal
+      - app_data:/app/dist
+      - app_data:/root/.cabal
+      - app_data:/root/.ghc
+      - ./build:/app/build
+
+  flyway_production:
+    image: hiogawa/flyway:4.0.1
+    environment:
+      FLYWAY_URL: $PRODUCTION_FLYWAY_URL
+      FLYWAY_USER: $PRODUCTION_FLYWAY_USER
+      FLYWAY_PASSWORD: $PRODUCTION_FLYWAY_PASSWORD
     volumes:
       - ./sql:/flyway/sql
 

@@ -1,7 +1,6 @@
 dev-app: SHELL:=/bin/bash
 dev-app:
-	source systems/env.development
-	cabal run exe:non-stack-yesod
+	source systems/env.development && cabal run exe:non-stack-yesod
 
 dev-install:
 	cabal sandbox init
@@ -22,9 +21,8 @@ dev-docker-migrate:
 
 dev-test: SHELL:=/bin/bash
 dev-test:
-	source systems/env.test
 	cabal configure --enable-tests
-	cabal test --show-details=always
+	source systems/env.test && cabal test --show-details=always
 
 dev-docker-test:
 	docker-compose -f systems/docker-compose.yml up test
@@ -33,3 +31,13 @@ dev-docker-test-travis:
 	mkdir -p cache/.cabal
 	mkdir -p cache/.ghc
 	docker-compose -f systems/docker-compose.yml -f systems/docker-compose.travis.yml up test
+
+deploy: SHELL:=/bin/bash
+deploy:
+	source systems/env.production && docker-compose -f systems/docker-compose.yml run production_builder
+	docker build -t registry.heroku.com/yesod-free-deploy/web -f systems/Dockerfile.dist systems
+	docker push registry.heroku.com/yesod-free-deploy/web
+
+deploy_migrate: SHELL:=/bin/bash
+deploy_migrate:
+	source systems/env.production && docker-compose -f systems/docker-compose.yml run flyway_production

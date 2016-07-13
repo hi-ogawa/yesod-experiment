@@ -49,7 +49,6 @@ test-suite test
                    , aeson
                    , base
                    , bytestring
-                   , hspec
                    , monad-logger
                    , persistent
                    , persistent-postgresql
@@ -57,4 +56,8 @@ test-suite test
                    , transformers
                    , yesod
                    , yesod-test
+                   , wai
                    , wai-extra
+                   , http-types
+                   , hspec
+                   , hspec-wai

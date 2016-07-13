@@ -22,6 +22,7 @@ import Data.Maybe (fromJust)
 
 import App (App(..), Route(PeopleR, PersonR, StatusR))
 import Models (Person(..))
+import HerokuPg (herokuPg2libPq)
 
 spec :: Spec
 spec = withApp yspec
@@ -29,7 +30,7 @@ spec = withApp yspec
 app :: App
 app = App { connection = conn }
   where
-    conn = TE.encodeUtf8 . T.pack . unsafePerformIO $ fromJust <$> lookupEnv "APP_DATABASE"
+    conn = herokuPg2libPq . fromJust . unsafePerformIO $ lookupEnv "DATABASE_URL"
 
 type SqlT = ReaderT SqlBackend (NoLoggingT IO)
 

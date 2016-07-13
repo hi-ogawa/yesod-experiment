@@ -13,7 +13,7 @@ services:
       "
     environment:
       PORT: 3000
-      APP_DATABASE: host=postgres port=5432 user=postgres dbname=postgres password=
+      DATABASE_URL: postgres://postgres:@postgres:5432/postgres
     ports:
       - 3000:3000
     volumes:
@@ -37,7 +37,7 @@ services:
         cabal test --show-details=always
       "
     environment:
-      APP_DATABASE: host=postgres port=5432 user=postgres dbname=postgres_test password=
+      DATABASE_URL: postgres://postgres:@postgres:5432/postgres_test
     volumes:
       - ../main.hs:/app/main.hs
       - ../src:/app/src
@@ -84,8 +84,6 @@ services:
         cabal install
         tar -czf build/non-stack-yesod.tar.gz -C /root/.cabal/bin non-stack-yesod
       "
-    environment:
-      APP_DATABASE: $APP_PRODUCTION_DATABASE
     volumes:
       - ../main.hs:/app/main.hs
       - ../src:/app/src

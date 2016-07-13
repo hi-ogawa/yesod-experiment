@@ -9,6 +9,7 @@
 - Database schema migration with Flyway
 - cabal.config from stackage-lts without Stack
 - Restful JSON api server
+  - Swagger UI is available: http://swaggers.hiogawa.net/ui/?url=/doc/yesod-experiment.swagger.json#/default
 - Testing all api routes on Travis CI
 - Heroku container deployment (image size is around 800MB)
 

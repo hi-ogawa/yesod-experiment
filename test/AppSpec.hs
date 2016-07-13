@@ -16,16 +16,20 @@ import Test.Hspec
 import Yesod hiding (get, runDB)
 import qualified Yesod as Y (get)
 import Yesod.Test
+import System.Environment (lookupEnv)
+import System.IO.Unsafe (unsafePerformIO)
+import Data.Maybe (fromJust)
 
 import App (App(..), Route(PeopleR, PersonR, StatusR))
 import Models (Person(..))
-import EnvVarLookup (envVarLookup)
 
 spec :: Spec
 spec = withApp yspec
 
 app :: App
-app = App { connection = TE.encodeUtf8 . T.pack $ $(envVarLookup "APP_DATABASE") }
+app = App { connection = conn }
+  where
+    conn = TE.encodeUtf8 . T.pack . unsafePerformIO $ fromJust <$> lookupEnv "APP_DATABASE"
 
 type SqlT = ReaderT SqlBackend (NoLoggingT IO)
 

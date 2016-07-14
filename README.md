@@ -12,6 +12,7 @@
   - Swagger UI is available: http://swaggers.hiogawa.net/ui/?url=/doc/yesod-experiment.swagger.json#/default
 - Testing all api routes on Travis CI
 - Heroku container deployment (image size is around 800MB)
+  - simpler version can be found here: https://github.com/hi-ogawa/haskell-heroku-docker
 
 ## Notes
 

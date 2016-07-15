@@ -34,8 +34,8 @@ dev-docker-test-travis:
 
 deploy: SHELL:=/bin/bash
 deploy:
-	docker-compose -f systems/docker-compose.yml run production_builder
-	docker build -t registry.heroku.com/yesod-free-deploy/web -f systems/Dockerfile.dist systems
+	docker-compose -f systems/docker-compose.yml run --rm builder
+	docker-compose -f systems/docker-compose.yml build distributor
 	docker push registry.heroku.com/yesod-free-deploy/web
 
 deploy_migrate: SHELL:=/bin/bash

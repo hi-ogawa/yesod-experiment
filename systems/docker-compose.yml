@@ -73,7 +73,7 @@ services:
     volumes:
       - ./sql:/flyway/sql
 
-  production_builder:
+  builder:
     build:
       context: ../
       dockerfile: ./systems/Dockerfile
@@ -93,6 +93,12 @@ services:
       - app_data:/root/.cabal
       - app_data:/root/.ghc
       - ./build:/app/build
+
+  distributor:
+    build:
+      context: ../
+      dockerfile: ./systems/Dockerfile.dist
+    image: registry.heroku.com/yesod-free-deploy/web
 
   flyway_production:
     image: hiogawa/flyway:4.0.1

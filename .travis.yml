@@ -25,6 +25,4 @@ before_install:
 install: true
 
 script:
-  - make dev-docker-db
-  - make dev-docker-migrate
-  - make dev-docker-test-travis
+  - make travis

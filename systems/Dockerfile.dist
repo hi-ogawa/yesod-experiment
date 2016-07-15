@@ -1,6 +1,8 @@
-FROM haskell:7.10.3
+FROM debian:jessie
 
-RUN apt-get update && apt-get install -y libpq-dev
+RUN apt-get update && \
+    apt-get install -y libpq-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /root/.cabal/bin
 WORKDIR /root/.cabal/bin

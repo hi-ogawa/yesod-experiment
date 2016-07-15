@@ -6,10 +6,10 @@ dist
 cabal.sandbox.config
 
 # app
-systems/env.production
+systems/flyway.production.conf
 systems/env.development
 systems/env.test
 client_session_key.aes
 
 # deployment
-systems/build/non-stack-yesod.tar.gz
+systems/build/production.tar.gz

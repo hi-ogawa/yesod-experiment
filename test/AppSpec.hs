@@ -7,8 +7,6 @@ import Control.Monad.Logger (NoLoggingT, runNoLoggingT)
 import Control.Monad.Trans.Reader (ReaderT)
 import Data.Aeson
 import qualified Data.ByteString.Lazy as B
-import qualified Data.Text as T
-import qualified Data.Text.Encoding as TE
 import Database.Persist.Sql (runSqlConn, SqlBackend)
 import Database.Persist.Postgresql (withPostgresqlConn)
 import Network.Wai.Test (SResponse(..))

@@ -34,7 +34,7 @@ library
                    , postgresql-simple
                    , network-uri
 
-executable non-stack-yesod
+executable production
   main-is:           main.hs
   ghc-options:       -static -threaded -Wall -fno-warn-unused-do-bind -fno-warn-type-defaults
   hs-source-dirs:    .

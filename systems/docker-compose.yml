@@ -1,30 +1,6 @@
 version: "2"
 
 services:
-  app:
-    build:
-      context: ../
-      dockerfile: ./systems/Dockerfile
-    command: >
-      bash -c "
-        cabal update &&
-        cabal install --only-dependencies &&
-        cabal run exe:non-stack-yesod
-      "
-    environment:
-      PORT: 3000
-      DATABASE_URL: postgres://postgres:@postgres:5432/postgres
-    ports:
-      - 3000:3000
-    volumes:
-      - ../main.hs:/app/main.hs
-      - ../src:/app/src
-      - ../cabal.config:/app/cabal.config
-      - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal
-      - app_data:/app/dist
-      - app_data:/root/.cabal
-      - app_data:/root/.ghc
-
   test:
     build:
       context: ../
@@ -56,52 +32,44 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   flyway:
-    image: hiogawa/flyway:4.0.1
-    environment:
-      FLYWAY_URL: jdbc:postgresql://postgres:5432/postgres
-      FLYWAY_USER: postgres
-      FLYWAY_PASSWORD:
+    image: hiogawa/flyway:4.0.1-0.0.1
     volumes:
       - ./sql:/flyway/sql
+      - ./flyway.conf:/flyway/flyway.conf
 
   flyway_test:
-    image: hiogawa/flyway:4.0.1
-    environment:
-      FLYWAY_URL: jdbc:postgresql://postgres:5432/postgres_test
-      FLYWAY_USER: postgres
-      FLYWAY_PASSWORD:
+    extends: flyway
     volumes:
-      - ./sql:/flyway/sql
+      - ./flyway.test.conf:/flyway/flyway.conf
 
-  production_builder:
-    build:
-      context: ../
-      dockerfile: ./systems/Dockerfile
+  flyway_production:
+    extends: flyway
+    volumes:
+      - ./flyway.production.conf:/flyway/flyway.conf
+
+
+  #############################
+  # production image creation #
+  #############################
+
+  builder:
+    extends: test # reuse build cache from test service
     command: >
       bash -c "
         cabal update &&
         cabal install --only-dependencies &&
         cabal install
-        tar -czf build/non-stack-yesod.tar.gz -C /root/.cabal/bin non-stack-yesod
+        tar -czf build/production.tar.gz -C /root/.cabal/bin production
       "
     volumes:
-      - ../main.hs:/app/main.hs
-      - ../src:/app/src
-      - ../cabal.config:/app/cabal.config
-      - ../non-stack-yesod.cabal:/app/non-stack-yesod.cabal
-      - app_data:/app/dist
-      - app_data:/root/.cabal
-      - app_data:/root/.ghc
       - ./build:/app/build
 
-  flyway_production:
-    image: hiogawa/flyway:4.0.1
-    environment:
-      FLYWAY_URL: $PRODUCTION_FLYWAY_URL
-      FLYWAY_USER: $PRODUCTION_FLYWAY_USER
-      FLYWAY_PASSWORD: $PRODUCTION_FLYWAY_PASSWORD
-    volumes:
-      - ./sql:/flyway/sql
+  distributor:
+    build:
+      context: ../
+      dockerfile: ./systems/Dockerfile.dist
+    image: registry.heroku.com/yesod-free-deploy/web
+
 
 volumes:
   app_data:

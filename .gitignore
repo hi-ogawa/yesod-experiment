@@ -12,4 +12,4 @@ systems/env.test
 client_session_key.aes
 
 # deployment
-systems/build/non-stack-yesod.tar.gz
+systems/build/production.tar.gz

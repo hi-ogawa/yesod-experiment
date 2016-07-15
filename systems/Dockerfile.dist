@@ -7,7 +7,7 @@ RUN apt-get update && \
 RUN mkdir -p /root/.cabal/bin
 WORKDIR /root/.cabal/bin
 
-COPY systems/build/non-stack-yesod.tar.gz /root/.cabal/bin/non-stack-yesod.tar.gz
-RUN tar -xzf non-stack-yesod.tar.gz non-stack-yesod
+COPY systems/build/production.tar.gz /root/.cabal/bin/production.tar.gz
+RUN tar -xzf production.tar.gz production
 
-CMD ./non-stack-yesod
+CMD ./production
